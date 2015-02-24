@@ -1,0 +1,37 @@
+
+# modify the values in this file for your site
+# the values here are examples and must all be changed
+
+package config;
+
+use strict;
+
+our $url = 'http://stolenboyvideos.com';
+
+our $home = '/var/www';                                 # where ever the .pm files and .log files are kept that should not be visible to the public
+
+our $address = '16WTNrktpQqTmxoqQMDccwp5RSmbhM2zub';    # blockchain.info will be asked to forward payments it processes to this address; change this to your address
+
+# IP address of the Bitcoin Core server running btc.cgi and btcrpc.pm
+# those scripts and the Bitcoin Core installation handle paying out referals
+# maybe be 127.0.0.1 if the same host has the hot wallet
+# the value for "hash2" in the config there must match here if it is a different post
+# should be the domain name of the site if it is the same site (eg 'stolenboyvideos.com')
+
+our $fullnodeip = '127.0.0.1';
+
+our $dbname = 'stolenboyvideos';                        # mysql login info for this site
+our $dbuser = 'stolenboyvideos';
+our $dbpass = 'sTXKUzU3vEJMAykV';
+
+our $hash1 = '--0yUd91d0J4i9H8l7';                      # secret value used to authenticate notifications of payment from blockchain.info back to here
+our $hash2 = '--f21c8WO9bz81eC2l';                      # secret value used to authenticate referal payout requests to the server at $fullnodeip
+
+# $bitcoincorerpcpass is only only required on the server at $fullnodeip
+# that config file may be in a different copy of the config than the one on the primary host if logic (main site vs hot wallet)
+# are spread across two hosts
+# note that it is necessary to conceal both $hash2 and this password to protect the hot wallet
+
+our $bitcoincorerpcpass = 'dg1U4MdkcY1Q4vTVUjgh1mMGJWXPFKmuhDrXg1p9vTur'; 
+
+1;
