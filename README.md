@@ -157,6 +157,6 @@ Message me on Reddit:  http://www.reddit.com/user/stolenboyvideos
 
 ## See Also
 
-Announcement/Motivation/Discussion:  http://www.reddit.com/r/Bitcoin/comments/2wr30a/nsfw_evil_gay_opposite_twin_of_the_been_accepting/
-Example:  http://stolenboyvideos.com
+* Announcement/Motivation/Discussion:  http://www.reddit.com/r/Bitcoin/comments/2wr30a/nsfw_evil_gay_opposite_twin_of_the_been_accepting/
+* Example:  http://stolenboyvideos.com
 
