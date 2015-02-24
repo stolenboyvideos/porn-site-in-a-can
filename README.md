@@ -32,6 +32,7 @@ Or I'll work on your own project.
 * User upload of video feature
 * Management interface
 * Better documentation/easier install
+* Twitter etc integration (post to Twitter when a new movie is uploaded)
 
 ## Technical Details
 
