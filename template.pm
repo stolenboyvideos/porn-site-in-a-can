@@ -29,7 +29,7 @@ sub user {
         # create a new user if we have to
         my $bytes_purchased = 1 * 1024 * 1024 * 1024;  # 1 free GB
         my $referer = CGI::param('referer') || CGI::param('referrer');    # BTC address to pay referral fees to
-        $referer =~ m/^[a-zA-Z0-9]$/ or die "referer should be a bitcoin address";
+        $referer =~ m/^[a-zA-Z0-9]+$/ or die "referer should be a bitcoin address";
         length($referer) <= 35 or die "referer should be a bitcoin address";
         my $user_id = query( "insert into users (ip, time_created, bytes_purchased, bytes_used, referer) values (?, ?, ?, ?, ?)", $ip, scalar time, $bytes_purchased, 0, $referer ); 
         ($user) = query("select * from users where id = ?", $user_id);
