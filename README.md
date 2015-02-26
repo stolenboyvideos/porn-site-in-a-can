@@ -29,10 +29,16 @@ Or I'll work on your own project.
 
 ## Todo
 
-* User upload of video feature
+* The upload script no longer works on shared hosts and needs to be reworked
 * Management interface
 * Better documentation/easier install
+* User upload of video feature
 * Twitter etc integration (post to Twitter when a new movie is uploaded)
+* Pull a real time price quote for BTC->USD
+* Make cookie length configurable
+* Add the Perl modules to the repo and distribute them with this
+* Downgrade gracefully if Math::Preference::SVD isn't available
+* Thumbnail size should be configuable
 
 ## Technical Details
 
@@ -46,7 +52,14 @@ Uses http://blockchain.info/api/receive to accept payments.
 Uses XML-RPC to interface with the Bitcoin Core standard Bitcoin server
 daemon for referal payouts.
 
+## Shared Host Limitations
+
+Math::Preference::SVD won't work without great difficulty on a shared host.
+Rating logic would need to be adjusted to work without it.
+
 ## Installation
+
+These installation instructions have not been tested.
 
 The files in the root should not be shared on the Web.  The files inside
 the `public_html` directory should be.
@@ -136,10 +149,14 @@ libjpeg-progs
 pvrg-jpeg
 ```
 
-Also requires `qtfaststart` for importing videos:  https://github.com/danielgtaylor/qtfaststart.
+## Adding Movies
 
 Use `upload.pl` to import movies.
-If you're using a shared host, try using `sshfs` to mount the remote machine as a directory on your local machine, and run `uplaod.pl` on your local machine (Mac or Linux).
+~~If you're using a shared host, try using `sshfs` to mount the remote machine as a directory on your local machine, and run `uplaod.pl` on your local machine (Mac or Linux).~~ Won't work with it trying to connect to the database.  Needs to be extended.
+
+It requires `qtfaststart`:  https://github.com/danielgtaylor/qtfaststart.
+
+It also requires ffmpeg, the Image::Info Perl module, and ffmpegthumbnailer.
 
 ## License
 
