@@ -5,6 +5,9 @@ Ready to deploy and configure adult video site.  Or make a non-porn tube site ou
 
 No porn included -- this is only code (and certainly not good enough code to be considered code porn).
 
+Despite the name, these install instructions do require basic familiarity with editing code,
+MySQL, and Linux.
+
 ## Features
 
 * Automatic indexing, conversion, and thumbnailing of video files
@@ -39,6 +42,7 @@ Or I'll work on your own project.
 * Add the Perl modules to the repo and distribute them with this
 * Downgrade gracefully if Math::Preference::SVD isn't available
 * Thumbnail size should be configuable
+* Better error messages in rare or not so rare case of fatal error
 
 ## Technical Details
 
@@ -156,7 +160,20 @@ Use `upload.pl` to import movies.
 
 It requires `qtfaststart`:  https://github.com/danielgtaylor/qtfaststart.
 
-It also requires ffmpeg, the Image::Info Perl module, and ffmpegthumbnailer.
+It also requires ffmpeg, the Image::Info Perl module, the Movie::Info module, and ffmpegthumbnailer.
+
+## Referal Commissions
+
+Make a partial copy of `config.pl` (with only the needed config values) and move that and `btcrpc.pm` to a private directory on the node running Bitcoin Core's `bitcoind`.
+This will be a VPS or dedicated server.
+Put `btc.cgi` in webroot and change the `use lib` line to reference whereever `config.pl` and `btcrpc.pm` are.
+Configure `config.pl` correctly for talking to `bitcoind` by setting the value for `$bitcoincorerpcpass` to whatever is in the
+`.bitcoin/bitcoin.conf` file in the home directory of the user running `bitcoind`.
+
+Change the `config.pm` on the shared host or machine hosting the site (could be the same machine but that's not recommended as it would add more exposure to the bitcoin wallet). 
+
+Make sure that the value for `$hash2` in `config.pm` on the machine hosting the site matches the value specified in the `config.pm` on the Bitcoin Core fullnode.
+Also make sure that `$fullnodeip` on the web sever machine points to the fullnode.
 
 ## License
 

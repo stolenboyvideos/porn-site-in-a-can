@@ -27,6 +27,11 @@ my $address = CGI::param('address');
 my $amount = CGI::param('amount');
 my $hash = CGI::param('hash');
 
+$address =~ m/^[a-zA-Z0-9]$/ or die "address should be a bitcoin address";
+length($address) <= 35 or die "address should be a bitcoin address";
+
+$amount =~ m/^[0-9]+\.[0-9]+$/ or die "amount should be a float";
+
 die unless $hash eq hash2("$address-$amount");
 
 my $tx = btcrpc::send( $address, 0 + $amount, );

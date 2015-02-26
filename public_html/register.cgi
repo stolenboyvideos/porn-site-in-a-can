@@ -43,14 +43,24 @@ if( $action eq 'login' ) {
 
     # log in to an existing account
 
+    # this is run when the user types in their passphrase to the login box
+    # the user never picks their passphrase.  it's assigned to them and they can't change it.
+
     my $password = CGI::param('password');
     if( ! $password or ! length($password) ) {
         print "Content-type: text/html\r\n\r\n";
         $code = 'BADPASS';
     } else {
         # the user gave a password of some sort
+        # see if we can find a user in the database with that password
+        # if so, replace the user object with that one for the purpose of rendering the rest of the page, and set a cookie too
+        # note that users only credential is this password (passphrase, actually)
+        # it's used as the contents of the cookie and it's what they enter to get their cookie back
+        # also note that $password is not escaped, so we cannot use string inteporation to send it as SQL
+        # sending it as a binary parameter should be fine
         ($user) = query( "select * from users where cookie = ? ", $password, );   # their password is in their cookie
         if( $user ) {
+             # did find a user in the database with the specified passphrase
              my $cookie = CGI::cookie( -name => 'account', -value => $user->cookie, -expires => '+1y', );
              $password = $user->cookie;  # for display below
              print "Content-type: text/html\r\n";
@@ -58,6 +68,7 @@ if( $action eq 'login' ) {
              print "\r\n";
              $code = 'LOGGEDIN';
         } else {
+            # did not find a user in the database with the specified passphrase
             print "Content-type: text/html\r\n\r\n";
             $code = 'NOTFOUND';
             $user = $old_user;
@@ -76,13 +87,19 @@ if( $action eq 'login' ) {
 
     }
 
+    # generate a random passphrase made out of lower case words of between 4 and 8 letters
+
     open my $fh, '<', $config::home . '/words' or die $!;
     my @words = shuffle( grep m/^[a-z]{4,8}$/, map { chomp; $_; } readline $fh );
     $password = join ' ', @words[1..5];
 
-    # change this user record to match on their new cookie (same as their password) instead of ip;
+    # change this user record to match on their new cookie (cookie is the same as their password) instead of ip;
     # create a new user record for that IP address without a data allocation to avoid cookie deleting attacks
     # (if we simply didn't create a new user for that IP address, one would automatically be created for anyone coming from that IP without a cookie, and it would have a default data allocation)
+
+    # each user record should have either a value in the ip field or a value in the cookie (password) field
+    # anonymous users are looked up by ip for the sake of leech protection and metering their allocation of free data
+    # registered users are looked up by cookie
 
     query( "insert into users (ip, debug, bytes_purchased, bytes_used) values (?, ?, ?, ?)", $user->ip,  "Created when user " . $user->id . " registered", 0, 0 );
 

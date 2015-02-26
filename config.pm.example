@@ -8,6 +8,8 @@ use strict;
 
 our $url = 'http://stolenboyvideos.com';
 
+our $sitepass = 'cdeF7XOIj6xhNlcbAz';
+
 our $home = '/var/www';                                 # where ever the .pm files and .log files are kept that should not be visible to the public
 
 our $address = '16WTNrktpQqTmxoqQMDccwp5RSmbhM2zub';    # blockchain.info will be asked to forward payments it processes to this address; change this to your address
